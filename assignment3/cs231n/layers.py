@@ -104,7 +104,10 @@ def dropout_forward(x, dropout_param):
 
   if mode == 'train':
     # Inverted dropout mask. Notice /p!
-    mask = (np.random.rand(*x.shape) < p) / p 
+    # normilizing by p leads to multiplicative factor
+    # this mask is sufficient since it's already binary
+    mask = (np.random.rand(*x.shape) < p)
+    
     out = x*mask # drop!
   elif mode == 'test':
     # Do nothing!
